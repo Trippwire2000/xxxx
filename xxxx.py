@@ -4,32 +4,70 @@ import PIL.ImageTk as ptk
 from tkinter import filedialog
 from PIL import Image, ImageDraw, ImageEnhance
 import random
+import tkinter.messagebox as box
+
 
 
 xxxx = tk.Tk()
 xxxx.title('XXXX')
 
-def check_for_win():
-	pass
+def check_for_win(zone):
+	win = False
+	if p1 == True:
+		x = 1
+	else:
+		x = 0
+
+	for row in range(len(gb)):
+		print(gb[row])
+		if (gb[row]) == [x,x,x,x]:
+			win = True
+
+	for column in range(4):
+		if gb[0][column] == x and gb[1][column] == x and gb[2][column] == x  and gb[3][column] == x:
+			win = True
+
+	if gb[0][0] == x and gb[1][1] == x and gb[2][2] == x and gb[3][3] == x:
+		win = True
+
+	if gb[0][3] == x and gb[1][2] == x and gb[2][1] == x and gb[3][0] == x:
+		win = True
+
+	if 9 not in gb[0]:
+			if 9 not in gb[1]:
+					if 9 not in gb[2]:
+							if 9 not in gb[3]:
+								box.showinfo('TIE')
+
+	if win == True:
+		if x == 1:
+			x = 'CROSSES'
+		else:
+			x = 'NOUGHTS'
+		box.showinfo('GAME OVER', 'The winner is {}!'.format(x))
+
+
+
+
 
 def initboard():
 
 	def click(zone,r,c):
 		global p1
-		global gameboard
+		global gb
 
 		zone['command'] = 0
 
 		if p1 == False:
 			zone.image = nought															
 			zone.configure(image=nought)
-			gameboard[r][c] = 0
+			gb[r][c] = 0
 		else:
 			zone.image = cross
 			zone.configure(image=cross)
-			gameboard[r][c] = 1
+			gb[r][c] = 1
 
-		check_for_win()
+		check_for_win(zone)
 		p1 = not p1
 
 
@@ -100,13 +138,13 @@ def initboard():
 	z15.grid(row=3, column=3)
 
 blankraw = p.Image.open('bl.png')
-crossraw = p.Image.open('x.png')
-noughtraw = p.Image.open('o.png')
+crossraw = p.Image.open('x2.png')
+noughtraw = p.Image.open('o2.png')
 blank = ptk.PhotoImage(blankraw)
 cross = ptk.PhotoImage(crossraw)
 nought = ptk.PhotoImage(noughtraw)
 p1 = True
-gameboard = [[9,9,9,9],[9,9,9,9],[9,9,9,9],[9,9,9,9]]
+gb = [[9,9,9,9],[9,9,9,9],[9,9,9,9],[9,9,9,9]]
 
 
 
